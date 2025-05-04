@@ -1,14 +1,14 @@
 import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-//import path from 'path';
-//import { fileURLToPath } from 'url';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 dotenv.config();
 
 // Initialize Express app
-//const __filename = fileURLToPath(import.meta.url);
-//const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -18,7 +18,7 @@ app.use(express.static( 'public'));
 
 // Set EJS as the view engine
 app.set("view engine", "ejs");
-//app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "views"));
 
 // Connect to MongoDB (using environment variable for production)
 const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/todoDB";
