@@ -3,8 +3,8 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import path from 'path';
 import { fileURLToPath } from 'url';
-import dotenv from 'dotenv';
-dotenv.config();
+//import dotenv from 'dotenv';
+//dotenv.config();
 
 // Initialize Express app
 const __filename = fileURLToPath(import.meta.url);
