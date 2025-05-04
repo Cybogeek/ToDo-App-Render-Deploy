@@ -1,0 +1,43 @@
+<%- include("./partials/header") %>
+<div class="container mt-5">
+  <div class="col-md-8 mx-auto">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title text-center mb-4">Edit Task</h2>
+        <form action="/edit/<%= task._id %>" method="POST">
+          <div class="mb-3">
+            <label for="taskTitle" class="form-label">Task Title</label>
+            <input
+              type="text"
+              name="title"
+              class="form-control"
+              id="taskTitle"
+              value="<%= task.title %>"
+              required
+            />
+          </div>
+          
+          <div class="mb-4">
+            <label for="taskPriority" class="form-label">Priority</label>
+            <select name="priority" id="taskPriority" class="form-select">
+              <option value="low" <%= task.priority === 'low' ? 'selected' : '' %>>Low</option>
+              <option value="medium" <%= task.priority === 'medium' ? 'selected' : '' %>>Medium</option>
+              <option value="high" <%= task.priority === 'high' ? 'selected' : '' %>>High</option>
+              <option value="urgent" <%= task.priority === 'urgent' ? 'selected' : '' %>>Urgent</option>
+            </select>
+          </div>
+          
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/" class="btn btn-outline-secondary me-md-2">
+              <i class="fas fa-times"></i> Cancel
+            </a>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i> Update Task
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include("./partials/footer") %>
