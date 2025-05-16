@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import path from "path";
-import { fileURLToPath } from "URL";
+import { fileURLToPath } from "url";
 import methodOverride from 'method-override';
 //import dotenv from 'dotenv';
 
