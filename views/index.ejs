@@ -13,11 +13,7 @@
               placeholder="Add a new task"
               required
             />
-            <select
-              name="priority"
-              class="form-select"
-              style="max-width: 150px"
-            >
+            <select name="priority" class="form-select" style="max-width: 150px;">
               <option value="medium">Medium</option>
               <option value="low">Low</option>
               <option value="high">High</option>
@@ -28,40 +24,22 @@
             </button>
           </div>
         </form>
-
+        
         <ul class="list-group">
           <% tasks.forEach(task => { %>
-          <li
-            class="list-group-item d-flex justify-content-between align-items-center priority-<%= task.priority %>"
-          >
+          <li class="list-group-item d-flex justify-content-between align-items-center priority-<%= task.priority %>">
             <div class="task-content">
               <span class="task-title"><%= task.title %></span>
-              <span
-                class="badge bg-<%= getPriorityBadgeColor(task.priority) %> ms-2"
-              >
-                <%= task.priority.charAt(0).toUpperCase() +
-                task.priority.slice(1) %>
+              <span class="badge bg-<%= getPriorityBadgeColor(task.priority) %> ms-2">
+                <%= task.priority.charAt(0).toUpperCase() + task.priority.slice(1) %>
               </span>
             </div>
             <div class="task-actions">
-              <a
-                href="/edit/<%= task._id %>"
-                class="btn btn-sm btn-outline-warning me-2"
-                title="Edit"
-              >
+              <a href="/edit/<%= task._id %>" class="btn btn-sm btn-outline-warning me-2" title="Edit">
                 <i class="fas fa-pencil-alt"></i>
               </a>
-              <form
-                action="/tasks/<%= task._id %>"
-                method="POST"
-                class="d-inline"
-              >
-                <input type="hidden" name="_method" value="DELETE" />
-                <button
-                  type="submit"
-                  class="btn btn-sm btn-outline-danger"
-                  title="Delete"
-                >
+              <form action="/tasks/<%= task._id %>?_method=DELETE" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
                   <i class="fas fa-trash-alt"></i>
                 </button>
               </form>
@@ -69,11 +47,11 @@
           </li>
           <% }) %>
         </ul>
-
+        
         <% if (tasks.length === 0) { %>
-        <div class="alert alert-info mt-3 text-center">
-          No tasks found. Add your first task above!
-        </div>
+          <div class="alert alert-info mt-3 text-center">
+            No tasks found. Add your first task above!
+          </div>
         <% } %>
       </div>
     </div>
