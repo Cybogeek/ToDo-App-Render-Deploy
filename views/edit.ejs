@@ -4,8 +4,7 @@
     <div class="card">
       <div class="card-body">
         <h2 class="card-title text-center mb-4">Edit Task</h2>
-        <form action="/tasks/<%= task._id %>" method="POST">
-          <input type="hidden" name="_method" value="PUT">
+        <form action="/tasks/<%= task._id %>?_method=PUT" method="POST">
           <div class="mb-3">
             <label for="taskTitle" class="form-label">Task Title</label>
             <input
