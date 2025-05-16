@@ -1,8 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from "path";
+import { fileURLToPath } from "url";
 //import dotenv from 'dotenv';
 
 // Initialize configuration
@@ -16,7 +16,7 @@ const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Set EJS as the view engine
 app.set("view engine", "ejs");
@@ -41,21 +41,21 @@ async function connectDB() {
 
 // Define Task Schema
 const taskSchema = new mongoose.Schema({
-  title: { 
-    type: String, 
+  title: {
+    type: String,
     required: true,
     trim: true,
-    minlength: 1
+    minlength: 1,
   },
   priority: {
     type: String,
-    enum: ['low', 'medium', 'high', 'urgent'],
-    default: 'medium'
+    enum: ["low", "medium", "high", "urgent"],
+    default: "medium",
   },
   createdAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 // Create Task Model
@@ -68,8 +68,8 @@ app.use(async (req, res, next) => {
       await connectDB();
       next();
     } catch (err) {
-      res.status(503).render("error", { 
-        message: "Service unavailable. Database connection failed." 
+      res.status(503).render("error", {
+        message: "Service unavailable. Database connection failed.",
       });
     }
   } else {
@@ -81,17 +81,17 @@ app.use(async (req, res, next) => {
 app.get("/", async (req, res) => {
   try {
     const tasks = await Task.find().sort({ createdAt: -1 });
-    res.render("index", { 
+    res.render("index", {
       tasks,
       getPriorityBadgeColor: (priority) => {
         const colors = {
-          'low': 'info',
-          'medium': 'primary',
-          'high': 'warning',
-          'urgent': 'danger'
+          low: "info",
+          medium: "primary",
+          high: "warning",
+          urgent: "danger",
         };
-        return colors[priority] || 'secondary';
-      }
+        return colors[priority] || "secondary";
+      },
     });
   } catch (err) {
     console.error("Error fetching tasks:", err);
@@ -101,7 +101,7 @@ app.get("/", async (req, res) => {
 
 app.post("/add", async (req, res) => {
   const { title, priority } = req.body;
-  
+
   if (!title?.trim()) {
     return res.redirect("/");
   }
@@ -109,7 +109,7 @@ app.post("/add", async (req, res) => {
   try {
     const newTask = new Task({
       title: title.trim(),
-      priority: priority || 'medium'
+      priority: priority || "medium",
     });
     await newTask.save();
     res.redirect("/");
@@ -132,9 +132,10 @@ app.get("/edit/:id", async (req, res) => {
   }
 });
 
-app.post("/edit/:id", async (req, res) => {
+// Changed from POST to PUT
+app.put("/tasks/:id", async (req, res) => {
   const { title, priority } = req.body;
-  
+
   if (!title?.trim()) {
     return res.redirect("/");
   }
@@ -152,7 +153,8 @@ app.post("/edit/:id", async (req, res) => {
   }
 });
 
-app.get("/delete/:id", async (req, res) => {
+// Changed from GET to DELETE
+app.delete("/tasks/:id", async (req, res) => {
   try {
     const result = await Task.findByIdAndDelete(req.params.id);
     if (!result) {
@@ -168,9 +170,9 @@ app.get("/delete/:id", async (req, res) => {
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).render("error", { 
+  res.status(500).render("error", {
     message: "Something went wrong!",
-    error: process.env.NODE_ENV === 'development' ? err.message : undefined
+    error: process.env.NODE_ENV === "development" ? err.message : undefined,
   });
 });
 
