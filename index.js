@@ -2,7 +2,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import path from "path";
-import { fileURLToPath } from "url";
+import { fileURLToPath } from "URL";
+import methodOverride from 'method-override';
 //import dotenv from 'dotenv';
 
 // Initialize configuration
@@ -17,10 +18,12 @@ const port = process.env.PORT || 3000;
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(methodOverride('_method'));
 
 // Set EJS as the view engine
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
 
 // Database Connection
 const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/todoDB";
